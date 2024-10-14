@@ -19,7 +19,7 @@ for (let i = 0; i < 2; i++) {
         }
 
         while (true) {
-            movieRating = +prompt('На сколько оцените его?');
+            movieRating = +prompt('На сколько оцените данный фильм?');
             if (movieRating === null) {
                 alert('Введите корректную оценку');
                 continue;

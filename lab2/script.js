@@ -8,6 +8,7 @@ const personalMovieDB = {
 }
 
 function buildTable(movies) {
+
     if (!personalMovieDB.private) {
         const tableContainer = document.getElementById('table');
         let table = '<table><tr><th>Название</th><th>Оценка</th></tr>'
@@ -17,6 +18,8 @@ function buildTable(movies) {
         table += '</table>'; 
         tableContainer.innerHTML = table;
     } else return;
+    
 }
 
 buildTable(personalMovieDB.movies); 
+
