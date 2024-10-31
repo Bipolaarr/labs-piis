@@ -1,8 +1,5 @@
 import shirts from "./shirts.js"
 
-
-
-
 const cartContainer = document.createElement('div')
     cartContainer.id="cartContainer"
 
@@ -10,68 +7,61 @@ shirts.forEach((element ,index) => {
 
     console.log(index)
     
-
-    
     const cart = document.createElement('div')
     cart.className='cart'
+
     const  tshirt =document.createElement("div")
     tshirt.className="tshirt"
+
     const  info =document.createElement("div")
     info.className="info"
+
     const  title =document.createElement("div")
     title.className="title"
+
     const  buttons =document.createElement("div")
     buttons.className="buttons"
-    
-    
-    
-    
-    
+
     const img = document.createElement("img");
     img.className="img"
     img.src = element.colors.white.front; 
     console.log(element.default.front)
     
+    const title1= document.createElement("label")
+    title1.className="name"
+    title1.textContent = element.name; 
+        
+    const subtitle= document.createElement("label")
+    subtitle.className="subtitle"
+    const colors=element.colors
+    subtitle.textContent = "Avaible in "+Object.keys(colors).length +" colors"; 
+        
+    const viewButton=document.createElement("button")
+    viewButton.className="button"
+    viewButton.textContent="Quick view"
+    viewButton.id=index
+    viewButton.addEventListener("click", () => openQuickView(index));
+    
+    const seeButton=document.createElement("button")
+    seeButton.className="button"
+    seeButton.textContent="See more"
+        
+    title.appendChild(title1)
+    title.appendChild(subtitle)
+
+    info.appendChild(title)
+    info.appendChild(buttons)
+
+    buttons.appendChild(viewButton)
+    buttons.appendChild(seeButton)
+
     tshirt.appendChild(img)
     
-    
-        cart.appendChild(tshirt)
-        const title1= document.createElement("label")
-        title1.className="name"
-        title1.textContent = element.name; // Устанавливаем текст
-        
-        const subtitle= document.createElement("label")
-        subtitle.className="subtitle"
-        const colors=element.colors
-        subtitle.textContent = "Avaible in "+Object.keys(colors).length +" colors"; // Устанавливаем текст
-        
-        title.appendChild(title1)
-        title.appendChild(subtitle)
-        info.appendChild(title)
-        info.appendChild(buttons)
-        cart.appendChild(info)
-        
+    cart.appendChild(tshirt)
+    cart.appendChild(info)
 
-
-        const viewButton=document.createElement("button")
-        viewButton.className="button"
-        viewButton.textContent="Быстрый просмотр"
-        viewButton.id=index
-        viewButton.addEventListener("click", () => openQuickView(index));
+    cartContainer.appendChild(cart);
     
-        const seeButton=document.createElement("button")
-        seeButton.className="button"
-        seeButton.textContent="Просмотреть"
-        
-        
-        buttons.appendChild(viewButton)
-        buttons.appendChild(seeButton)
-        
-        
-        
-        cartContainer.appendChild(cart);
-    
-
 });
 
 function openQuickView(num) {
@@ -84,33 +74,19 @@ function openQuickView(num) {
 
     title.textContent = shirts[id].name;
     description.textContent = shirts[id].price;
-    imageFront.src = shirts[id].colors[Object.keys(shirts[id].colors)[0]].front; // Отображаем первую доступную цветовую картинку
+    imageFront.src = shirts[id].colors[Object.keys(shirts[id].colors)[0]].front; 
     imageBack.src = shirts[id].colors[Object.keys(shirts[id].colors)[0]].back
-    modal.style.display = "block"; // Показываем модальное окно
+    modal.style.display = "block"; 
 }
 
-// Закрытие модального окна при нажатии на крестик
+
 const closeModal = document.getElementsByClassName("close")[0];
 console.log(closeModal.textContent)
 closeModal.onclick = function() {
     console.log("qqq")
     const modal = document.getElementById("quickViewModal");
-    modal.style.display = "none"; // Скрываем модальное окно
+    modal.style.display = "none"; 
 }
-
-// Закрытие модального окна при клике вне его
-window.onclick = function(event) {
-    const modal = document.getElementById("quickViewModal");
-    if (event.target == modal) {
-        modal.style.display = "none"; // Скрываем модальное окно
-    }
-}
-
-
-
-
-
-
 
 document.body.appendChild(cartContainer);
 
