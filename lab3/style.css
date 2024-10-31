@@ -6,8 +6,7 @@
     border-color: lightsalmon;
     border-radius: 15px;
     margin-left: 50px;
-    margin-bottom: 20px;
-    
+    margin-bottom: 20px;    
 }
 #cartContainer{
     display: flex;
@@ -16,7 +15,7 @@
 }
 .tshirt{
     width: 100%;
-    border-radius: 25px;
+    border-radius: 40px;
     overflow: hidden;
 }
 .img{
@@ -51,7 +50,8 @@ padding-top: 15px;
     
 }
 #maintext{
-    margin-left: 50px;
+    display: flex;                
+    justify-content: center;      
 }
 #quickViewImage{
     height: 100px;
