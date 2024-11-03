@@ -1,3 +1,5 @@
+
+
 const title = document.createElement("p")
 
 const shirt = JSON.parse(localStorage.getItem('index'));
@@ -60,6 +62,9 @@ frontButton.addEventListener("click", () => {
  
 });
 
+
+
+
 const backButton=document.createElement("button")
 backButton.textContent="Back"
 backButton.className="button"
@@ -69,6 +74,7 @@ backButton.addEventListener("click", () => {
     viewClicked="back"
     img.src = shirt.colors[colorClicked].back
 });
+
 
 const whiteButton=document.createElement("button")
 whiteButton.textContent="White"
@@ -98,6 +104,7 @@ pinkButton.style.backgroundColor=pinkButton.textContent.toLowerCase()
 buttons.push(pinkButton)
 //-------------------------------------------
 
+
 //PACKING
 upperContainer.appendChild(sideText)
 upperContainer.appendChild(frontButton)
@@ -125,7 +132,7 @@ imageContainer.appendChild(img)
 content.appendChild(titleContainer)
 content.appendChild(upperContainer)
 content.appendChild(lowerContainer)
-//--------------------------------------
+//-------------------------------------------
 
 title.textContent=shirt.name
 mainContainer.appendChild(imageContainer)
