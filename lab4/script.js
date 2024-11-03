@@ -45,6 +45,10 @@ shirts.forEach((element ,index) => {
     const seeButton=document.createElement("button")
     seeButton.className="button"
     seeButton.textContent="See more"
+    seeButton.onclick = function() { 
+        localStorage.setItem('index', JSON.stringify(shirts[index]));
+        window.location.href = 'seePage.html';
+    }; 
         
     title.appendChild(title1)
     title.appendChild(subtitle)
@@ -87,6 +91,8 @@ closeModal.onclick = function() {
     const modal = document.getElementById("quickViewModal");
     modal.style.display = "none"; 
 }
+
+
 
 document.body.appendChild(cartContainer);
 
