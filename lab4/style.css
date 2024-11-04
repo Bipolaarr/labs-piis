@@ -24,21 +24,22 @@
 }
 .button{
     background-color: lightsalmon;
-    border-radius: 5px;
+    border-radius: 15px;
     color: black;
     height: 35px;
 }
 .seeButton{
     background-color: lightsalmon;
-    border-radius: 5px;
+    border-radius: 15px;
     color: black;
     height: 35px;
+    padding-top: 5px;
 }
 .buttons{
-display: flex;
-align-items: center;
-justify-content: space-around;
-padding-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 5px;
 }
 .name{
     margin-top: 10px;
