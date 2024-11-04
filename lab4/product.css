@@ -1,14 +1,5 @@
-.buttons{
-
-}
-.imageContainer{
-
-}
 .titleContainer{
     margin-bottom: 40px;
-}
-.buttonsContainer{
-
 }
 .upperLower{
     display: flex;
@@ -27,22 +18,24 @@
 .button{
     border-radius: 10px;
     border-width: 3px;
-    border-color: #0d0640;
+    border-color: black;
+    background-color: black;
     width: 80px;
     height: 40px;
     margin-left: 10px;
 }
 .annotation{
-    color:grey;
+    color:black;
+    font-size: 25px;
 }
 #price{
     font-size: 30px;
     font-weight: 700;
-    color:#0d0640;
+    color:black;
 
 }
 #description{
     font-weight: 600;
-    color:#0d0640;
+    color:black;
     font-size: 18px;
 }
