@@ -9,8 +9,10 @@ let originalPosition = { top: 0, left: 0 };
 targets.forEach(target => {
     target.addEventListener('mousedown', (event) => {
         if (isSticky) return; 
+
         isDragging = true;
         currentElement = target;
+
         offsetX = event.clientX - target.getBoundingClientRect().left;
         offsetY = event.clientY - target.getBoundingClientRect().top;
     });
@@ -22,14 +24,14 @@ targets.forEach(target => {
             originalPosition.top = target.style.top;
             originalPosition.left = target.style.left;
         }
-        target.style.Color = 'lightseagreen'; 
+        target.style.backgroundColor = 'blue'; 
     });
 
    
     target.addEventListener('click', () => {
         if (isSticky && currentElement === target) {
             isSticky = false;
-            currentElement.style.Color = 'lightseagreen';
+            currentElement.style.backgroundColor = 'red';
             currentElement = null; 
         }
     });
@@ -61,7 +63,7 @@ document.addEventListener('keydown', (event) => {
         currentElement.style.left = originalPosition.left;
         isDragging = false;
         isSticky = false;
-        currentElement.style.Color = 'lightseagreen'; 
+        currentElement.style.backgroundColor = 'red'; 
         currentElement = null;
     }
 });
