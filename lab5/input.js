@@ -1,13 +1,13 @@
 const targets = document.querySelectorAll('.target');
 let isDragging = false;
 let isSticky = false;
-let offsetX = null , offsetY = null;
+let offsetX, offsetY;
 let currentElement = null;
 let originalPosition = { top: 0, left: 0 };
 
 
 targets.forEach(target => {
-    target.addEventListener('pressed', (event) => {
+    target.addEventListener('mousedown', (event) => {
         if (isSticky) return; 
         isDragging = true;
         currentElement = target;
@@ -15,21 +15,21 @@ targets.forEach(target => {
         offsetY = event.clientY - target.getBoundingClientRect().top;
     });
 
-    target.addEventListener('doubleclick', () => {
+    target.addEventListener('dblclick', () => {
         isSticky = true;
         if (currentElement !== target) {
             currentElement = target;
             originalPosition.top = target.style.top;
             originalPosition.left = target.style.left;
         }
-        target.style.backgroundColor = 'lightsalmon'; 
+        target.style.backgroundColor = 'blue'; 
     });
 
    
     target.addEventListener('click', () => {
         if (isSticky && currentElement === target) {
             isSticky = false;
-            currentElement.style.backgroundColor = 'lightseagreen';
+            currentElement.style.backgroundColor = 'lightsalmon';
             currentElement = null; 
         }
     });
@@ -47,7 +47,7 @@ document.addEventListener('mousemove', (event) => {
 });
 
 
-document.addEventListener('unpressed', () => {
+document.addEventListener('mouseup', () => {
     if (isDragging) {
         isDragging = false;
         currentElement = null;
@@ -61,7 +61,7 @@ document.addEventListener('keydown', (event) => {
         currentElement.style.left = originalPosition.left;
         isDragging = false;
         isSticky = false;
-        currentElement.style.backgroundColor = 'lightseagreen'; 
+        currentElement.style.backgroundColor = 'lightsalmon'; 
         currentElement = null;
     }
 });
