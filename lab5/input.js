@@ -22,7 +22,7 @@ targets.forEach(target => {
             originalPosition.top = target.style.top;
             originalPosition.left = target.style.left;
         }
-        target.style.Color = 'green'; 
+        target.style.Color = 'lightseagreen'; 
     });
 
    
@@ -61,7 +61,7 @@ document.addEventListener('keydown', (event) => {
         currentElement.style.left = originalPosition.left;
         isDragging = false;
         isSticky = false;
-        currentElement.style.Color = 'green'; 
+        currentElement.style.Color = 'lightsalmon'; 
         currentElement = null;
     }
 });
