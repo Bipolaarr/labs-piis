@@ -23,7 +23,7 @@ body {
 .target {
   position: absolute;
   border: 2px solid black;
-  color: green;
-  background-color: green;
+  color: lightsalmon;
+  background-color: lightsalmon;
   box-sizing: border-box;
 }
