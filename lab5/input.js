@@ -29,7 +29,7 @@ targets.forEach(target => {
     target.addEventListener('click', () => {
         if (isSticky && currentElement === target) {
             isSticky = false;
-            currentElement.style.Color = 'blue';
+            currentElement.style.Color = 'lightseagreen';
             currentElement = null; 
         }
     });
@@ -61,7 +61,7 @@ document.addEventListener('keydown', (event) => {
         currentElement.style.left = originalPosition.left;
         isDragging = false;
         isSticky = false;
-        currentElement.style.Color = 'lightsalmon'; 
+        currentElement.style.Color = 'lightseagreen'; 
         currentElement = null;
     }
 });
