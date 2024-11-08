@@ -22,14 +22,14 @@ targets.forEach(target => {
             originalPosition.top = target.style.top;
             originalPosition.left = target.style.left;
         }
-        target.style.backgroundColor = 'blue'; 
+        target.style.Color = 'green'; 
     });
 
    
     target.addEventListener('click', () => {
         if (isSticky && currentElement === target) {
             isSticky = false;
-            currentElement.style.backgroundColor = 'lightsalmon';
+            currentElement.style.Color = 'blue';
             currentElement = null; 
         }
     });
@@ -61,7 +61,7 @@ document.addEventListener('keydown', (event) => {
         currentElement.style.left = originalPosition.left;
         isDragging = false;
         isSticky = false;
-        currentElement.style.backgroundColor = 'lightsalmon'; 
+        currentElement.style.Color = 'green'; 
         currentElement = null;
     }
 });
