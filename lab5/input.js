@@ -13,6 +13,9 @@ targets.forEach(target => {
         isDragging = true;
         currentElement = target;
 
+        originalPosition.top = target.style.top;
+        originalPosition.left = target.style.left;
+        
         offsetX = event.clientX - target.getBoundingClientRect().left;
         offsetY = event.clientY - target.getBoundingClientRect().top;
     });
