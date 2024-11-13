@@ -4,123 +4,124 @@ let isSticky = false;
 let offsetX, offsetY;
 let currentElement = null;
 let originalPosition = { top: 0, left: 0 };
-let touchStartPosition = { x: 0, y: 0 };
-const minSize = 40; 
-
-
-const updatePosition = (event) => {
-    const touch = event.touches ? event.touches[0] : event;
-    if (currentElement) {
-        currentElement.style.left = (touch.clientX - offsetX) + 'px';
-        currentElement.style.top = (touch.clientY - offsetY) + 'px';
-    }
-};
 
 targets.forEach(target => {
+    // Обработчик мыши для начала перетаскивания
     target.addEventListener('mousedown', (event) => {
-        if (isSticky) return;
+        if (isSticky) return; 
 
-        isDragging = true;
-        currentElement = target;
+        originalPosition.top = target.style.top;
+        originalPosition.left = target.style.left;
 
-        offsetX = event.clientX - target.getBoundingClientRect().left;
-        offsetY = event.clientY - target.getBoundingClientRect().top;
+        startDragging(target, event.clientX, event.clientY);
     });
 
-    target.addEventListener('touchstart', (event) => {
-        if (isSticky) return;
-
-        isDragging = true;
-        currentElement = target;
-
-        const touch = event.touches[0];
-        offsetX = touch.clientX - target.getBoundingClientRect().left;
-        offsetY = touch.clientY - target.getBoundingClientRect().top;
-    });
-
+    // Обработчик двойного нажатия
     target.addEventListener('dblclick', () => {
         isSticky = true;
         if (currentElement !== target) {
             currentElement = target;
-            originalPosition.top = target.style.top;
-            originalPosition.left = target.style.left;
+            originalPosition.top = target.style.top || '0px';
+            originalPosition.left = target.style.left || '0px';
         }
-        target.style.backgroundColor = 'blue';
+        target.style.backgroundColor = 'blue'; 
     });
 
+    // Обработчик клика для выхода из режима «следующий за пальцем»
     target.addEventListener('click', () => {
         if (isSticky && currentElement === target) {
             isSticky = false;
             currentElement.style.backgroundColor = 'red';
-            currentElement = null;
+            currentElement = null; 
+        }
+    });
+
+    // Обработчики событий сенсорного экрана
+    target.addEventListener('touchstart', (event) => {
+
+        originalPosition.top = target.style.top;
+        originalPosition.left = target.style.left;
+
+        if (event.touches.length > 1) {
+            resetDragging();
+            return;
+        }
+        const touch = event.touches[0];
+        if (isSticky) {
+            followFinger(touch.clientX, touch.clientY);
+        } else {
+            startDragging(target, touch.clientX, touch.clientY);
+        }
+    });
+
+    target.addEventListener('touchmove', (event) => {
+        if (isDragging || isSticky) {
+            const touch = event.touches[0];
+            followFinger(touch.clientX, touch.clientY);
+        }
+    });
+
+    target.addEventListener('touchend', (event) => {
+        if (isSticky) {
+            return; // Не останавливаем режим
+        }
+        if (isDragging) {
+            stopDragging();
         }
     });
 });
 
+function startDragging(target, clientX, clientY) {
+    isDragging = true;
+    currentElement = target;
+
+    originalPosition.top = target.style.top || '0px';
+    originalPosition.left = target.style.left || '0px';
+
+    offsetX = clientX - target.getBoundingClientRect().left;
+    offsetY = clientY - target.getBoundingClientRect().top;
+}
+
+function followFinger(clientX, clientY) {
+    if (currentElement) {
+        currentElement.style.left = (clientX - offsetX) + 'px';
+        currentElement.style.top = (clientY - offsetY) + 'px';
+    }
+}
+
+function stopDragging() {
+    isDragging = false;
+    currentElement = null;
+}
+
+function resetDragging() {
+    if (currentElement) {
+        currentElement.style.top = originalPosition.top;
+        currentElement.style.left = originalPosition.left;
+        stopDragging();
+    }
+}
 
 document.addEventListener('mousemove', (event) => {
-    if (isDragging) {
-        updatePosition(event);
+    if (isDragging && currentElement) {
+        currentElement.style.left = (event.clientX - offsetX) + 'px';
+        currentElement.style.top = (event.clientY - offsetY) + 'px';
+    } else if (isSticky && currentElement) {
+        currentElement.style.left = (event.clientX - offsetX) + 'px';
+        currentElement.style.top = (event.clientY - offsetY) + 'px';
     }
 });
-
-document.addEventListener('touchmove', (event) => {
-    if (isDragging) {
-        updatePosition(event);
-    }
-});
-
 
 document.addEventListener('mouseup', () => {
     if (isDragging) {
-        isDragging = false;
-        currentElement = null;
+        stopDragging();
     }
-});
-
-document.addEventListener('touchend', () => {
-    if (isDragging) {
-        isDragging = false;
-        currentElement = null;
-    }
-});
-
-
-document.addEventListener('touchstart', (event) => {
-    if (event.touches.length > 1) { 
-        if (currentElement) {
-            currentElement.style.top = originalPosition.top;
-            currentElement.style.left = originalPosition.left;
-            isDragging = false;
-            isSticky = false;
-            currentElement.style.backgroundColor = 'red';
-            currentElement = null;
-        }
-    }
-});
-
-
-targets.forEach(target => {
-    target.addEventListener('wheel', (event) => {
-        event.preventDefault(); 
-        let newWidth = parseInt(target.style.width) + (event.deltaY < 0 ? 10 : -10);
-        let newHeight = parseInt(target.style.height) + (event.deltaY < 0 ? 10 : -10);
-        
-        
-        if (newWidth >= minSize && newHeight >= minSize) {
-            target.style.width = newWidth + 'px';
-            target.style.height = newHeight + 'px';
-        }
-    });
 });
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && currentElement) {
-        currentElement.style.top = originalPosition.top;
-        currentElement.style.left = originalPosition.left;
-        isDragging = false;
-        isSticky = false;
-        currentElement.style.backgroundColor = 'red';
+        resetDragging();
+        currentElement.style.backgroundColor = 'red'; 
         currentElement = null;
     }
 });
