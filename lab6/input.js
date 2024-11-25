@@ -1,94 +1,13 @@
-const targets = document.querySelectorAll('.target');
+const elements = document.querySelectorAll(".target")
 
-let activeElement = null;
-let action = null; 
-let offsetX, offsetY;
-let originalPosition = { top: 0, left: 0 };
+let activeDiv = null;
+let action = null;
+let differenceX, differenceY;
+let lastTouchTime;
 
-
-targets.forEach(target => {
-
-    let newPositionX = div.offsetY;
-    let newPositionY = div.offsetTop;
-
-
-    target.addEventListener('mousedown', (event) => {
-
-       if (!activeElement) {
-        activeElement = target; 
-        action = 'move';
-        offsetX = event.clientX - div.offsetLeft;
-        offsety = event.clientY - div.offsetTop;
-        }
-
-    });
-
-    target.addEventListener('dblclick', (event) => {
-        if (!activeElement) {
-            activeElement = target;
-            action = 'dblclick';
-            offsetX = event.clientX - div.offsetLeft;
-            offsety = event.clientY - div.offsetTop;
-            target.style.backgroundColor = 'green'
-        }
-    });
-
-   
-    target.addEventListener('click', (event) => {
-        if (target == activeElement && action == 'dblClick') {
-            activeElement = null; 
-            action = null; 
-            newPositionX = div.offsetLeft;
-            newPositionY = div.offsetTop;
-            target.style.backgroundColor = 'red';
-        }
-    });
-});
-
-
-document.addEventListener('mousemove', (event) => {
-    if (target = activeElement && action) {
-        target.style.left = '${event.clientX - offsetX}px'; 
-        target.style.top = '${event.clientY - offsetY}px';
-    }
-});
-
-
-document.addEventListener('mouseup', (event) => {
-    if (div === activeDiv && action === 'move') {
-        activeDiv = null;
-        action = null;
-        newPositionX = div.offsetLeft;
-        newPositionY = div.offsetTop;
-    }
-});
-
-document.addEventListener('keydown', (event) => {
-    if (event.code == 'Escape' && activeElement == target) {
-        escape(); 
-    }
-});
-
-div.addEventListener("touchstart", (e) => {
-    if (!activeElement && action !== 'touch_dblClick') {
-      activeElement = target;
-      action = 'touch_move';
-      offsetX = e.touches[0].clientX - target.offsetLeft;
-      offsetY = e.touches[0].clientY - target.offsetTop;
-      div.style.zIndex = 1000;
-    }
-  });
-
-  document.addEventListener("touchstart", (e) => {
-    if (e.touches.length > 1) escape();
-  });
-
-  document.addEventListener("touchmove", (e) => {
-    if (action) {
-      activeElement.style.left = `${e.touches[0].clientX - offsetX}px`;
-      activeElement.style.top = `${e.touches[0].clientY - offsetY}px`;
-    }
-  });
+elements.forEach(div => {
+  let newPositionX = div.offsetLeft;
+  let newPositionY = div.offsetTop;
 
   const isDblTouch = () => {
     const now = new Date().getTime();
@@ -98,25 +17,96 @@ div.addEventListener("touchstart", (e) => {
   }
 
   const escape = () => {
-    activeElement = null;
+    activeDiv = null;
     action = null;
     activeFinger = false;
-    target.style.left = newPositionX + 'px';
-    target.style.top = newPositionY + 'px';
-    target.style.backgroundColor = 'red';
+    div.style.left = newPositionX + 'px';
+    div.style.top = newPositionY + 'px';
+    div.style.backgroundColor = 'red';
+    div.style.zIndex = '1';
   }
 
+  div.addEventListener('mousedown', (e) => {
+    if (!activeDiv) {
+      activeDiv = div;
+      action = 'move';
+      differenceX = e.clientX - div.offsetLeft;
+      differenceY = e.clientY - div.offsetTop;
+      div.style.zIndex = 1000;
+    }
+  })
+  div.addEventListener('dblclick', (e) => {
+    if (!activeDiv) {
+      activeDiv = div;
+      action = 'dblClick';
+      differenceX = e.clientX - div.offsetLeft;
+      differenceY = e.clientY - div.offsetTop;
+      div.style.backgroundColor = 'cornflowerblue';
+      div.style.zIndex = 1000;
+    }
+  })
+  document.addEventListener('mousemove', (e) => {
+    if (div === activeDiv && action) {
+      div.style.left = `${e.clientX - differenceX}px`;
+      div.style.top = `${e.clientY - differenceY}px`;
+    }
+  })
+  div.addEventListener('mouseup', (e) => {
+    if (div === activeDiv && action === 'move') {
+      activeDiv = null;
+      action = null;
+      newPositionX = div.offsetLeft;
+      newPositionY = div.offsetTop;
+      div.style.zIndex = '1';
+    }
+  })
+  div.addEventListener('click', (e) => {
+    if (div === activeDiv && action === 'dblClick') {
+      activeDiv = null;
+      action = null;
+      newPositionX = div.offsetLeft;
+      newPositionY = div.offsetTop;
+      div.style.backgroundColor = 'red';
+      div.style.zIndex = '1';
+    }
+  })
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Escape" && activeDiv === div) {
+      escape();
+    }
+  });
+
+
+  div.addEventListener("touchstart", (e) => {
+    if (!activeDiv && action !== 'touch_dblClick') {
+      activeDiv = div;
+      action = 'touch_move';
+      differenceX = e.touches[0].clientX - div.offsetLeft;
+      differenceY = e.touches[0].clientY - div.offsetTop;
+      div.style.zIndex = 1000;
+    }
+  })
+  document.addEventListener("touchstart", (e) => {
+    if (e.touches.length > 1) escape();
+  })
+  document.addEventListener("touchmove", (e) => {
+    if (action) {
+      activeDiv.style.left = `${e.touches[0].clientX - differenceX}px`;
+      activeDiv.style.top = `${e.touches[0].clientY - differenceY}px`;
+    }
+  })
   div.addEventListener("touchend", (e) => {
     if (div === activeDiv && action === 'touch_move') {
       if (isDblTouch()) {
         action = 'touch_dblClick';
-        target.style.backgroundColor = 'green';
+        div.style.backgroundColor = 'cornflowerblue';
         return;
       }
-      activeElement = null;
+      activeDiv = null;
       action = null;
-      newPositionX = target.offsetLeft;
-      newPositionY = target.offsetTop;
-      
+      newPositionX = div.offsetLeft;
+      newPositionY = div.offsetTop;
+      div.style.zIndex = '1';
     }
-  });
+  })
+})
