@@ -4,7 +4,7 @@ let activeDiv = null;
 let action = null;
 let differenceX, differenceY;
 let lastTouchTime;
-let touchCount = 0; // Счетчик касаний
+let touchCount = 0; 
 
 elements.forEach(div => {
   let newPositionX = div.offsetLeft;
@@ -23,7 +23,6 @@ elements.forEach(div => {
     div.style.left = newPositionX + 'px';
     div.style.top = newPositionY + 'px';
     div.style.backgroundColor = 'red';
-    div.style.zIndex = '1';
   };
 
   div.addEventListener('mousedown', (e) => {
@@ -41,8 +40,7 @@ elements.forEach(div => {
       action = 'dblClick';
       differenceX = e.clientX - div.offsetLeft;
       differenceY = e.clientY - div.offsetTop;
-      div.style.backgroundColor = 'green';
-
+      div.style.backgroundColor = 'green'; 
     }
   });
 
@@ -68,7 +66,7 @@ elements.forEach(div => {
       action = null;
       newPositionX = div.offsetLeft;
       newPositionY = div.offsetTop;
-      div.style.backgroundColor = 'red';
+      div.style.backgroundColor = 'red'; 
     }
   });
 
@@ -79,16 +77,18 @@ elements.forEach(div => {
   });
 
   div.addEventListener("touchstart", (e) => {
-    if (!activeDiv && action !== 'touch_dblClick') {
+    if (isDblTouch()) {
       activeDiv = div;
       action = 'touch_move';
       differenceX = e.touches[0].clientX - div.offsetLeft;
       differenceY = e.touches[0].clientY - div.offsetTop;
+      div.style.backgroundColor = 'green'; 
+    } else {
+      touchCount++; 
     }
-    touchCount++;
 
-    if (touchCount === 3) {
-      escape();
+    if (touchCount === 3 && activeDiv === div) {
+      escape(); 
       touchCount = 0; 
     }
   });
@@ -104,7 +104,7 @@ elements.forEach(div => {
     if (div === activeDiv && action === 'touch_move') {
       if (isDblTouch()) {
         action = 'touch_dblClick';
-        div.style.backgroundColor = 'green';
+        div.style.backgroundColor = 'green'; 
         return;
       }
       activeDiv = null;
@@ -112,6 +112,7 @@ elements.forEach(div => {
       newPositionX = div.offsetLeft;
       newPositionY = div.offsetTop;
     }
+    
     touchCount = 0;
   });
 });
