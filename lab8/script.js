@@ -49,11 +49,11 @@ canvas.addEventListener('mousemove', event => {
 		const radius = Math.sqrt(
 			Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2)
 		);
-		// ctx.beginPath();
+		
 		ctx.arc(startX, startY, radius, 0, Math.PI * 2);
 		ctx.fillStyle = 'rgba(0, 0, 255, 1)';
 		ctx.fill();
-		// ctx.closePath();
+		
 	} else if (currentShape === 'rectangle') {
 		const width = currentX - startX;
 		const height = currentY - startY;
@@ -68,7 +68,6 @@ canvas.addEventListener('mouseup', event => {
 	const currentX = event.offsetX;
 	const currentY = event.offsetY;
 
-	// Сохранение текущей фигуры в массив
 	if (currentShape === 'circle') {
 		const radius = Math.sqrt(
 			Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2)
@@ -79,7 +78,7 @@ canvas.addEventListener('mouseup', event => {
 			startY: startY,
 			radius: radius,
 		});
-	
+		
 	} else if (currentShape === 'rectangle') {
 		const width = currentX - startX;
 		const height = currentY - startY;

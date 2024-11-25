@@ -62,6 +62,7 @@ elements.forEach(div => {
       action = null;
       newPositionX = div.offsetLeft;
       newPositionY = div.offsetTop;
+      div.style.backgroundColor = 'red';
     }
   })
   document.addEventListener("keydown", (e) => {
@@ -93,6 +94,8 @@ elements.forEach(div => {
       if (isDblTouch()) {
         action = 'touch_dblClick';
         div.style.backgroundColor = 'green';
+        newPositionX = div.offsetLeft;
+        newPositionY = div.offsetTop;
         return;
       }
       activeDiv = null;
