@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<title>lab7</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<h2>Выберите фигуру:</h2>
+		<label>
+			<input type="radio" name="shape" value="circle" checked /> Круг
+		</label>
+		<label>
+			<input type="radio" name="shape" value="rectangle" /> Прямоугольник
+		</label>
+		<div>
+			<p>Нарисованные круги: <span id="circleCount">0</span></p>
+			<p>Нарисованные прямоугольники: <span id="rectangleCount">0</span></p>
+		</div>
+		<svg width="800" height="600" id="canvas"></svg>
+		<script src="script.js"></script>
+	</body>
+</html>
