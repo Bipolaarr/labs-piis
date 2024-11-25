@@ -1,11 +1,8 @@
 const svg = document.getElementById('canvas');
-const circleCountElem = document.getElementById('circleCount');
-const rectangleCountElem = document.getElementById('rectangleCount');
 
 let isDrawing = false;
 let startX, startY, currentShape;
-let circleCount = 0;
-let rectangleCount = 0;
+
 
 svg.addEventListener('mousedown', event => {
 	isDrawing = true;
@@ -71,15 +68,5 @@ svg.addEventListener('mousemove', event => {
 
 svg.addEventListener('mouseup', () => {
 	isDrawing = false;
-	if (currentShape) {
-		if (currentShape.tagName === 'circle') {
-			circleCount++;
-			circleCountElem.textContent = circleCount;
-		} else if (currentShape.tagName === 'rect') {
-			rectangleCount++;
-			rectangleCountElem.textContent = rectangleCount;
-		}
-	}
-
 	currentShape = null;
 });

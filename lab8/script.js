@@ -1,13 +1,9 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const circleCountElem = document.getElementById('circleCount');
-const rectangleCountElem = document.getElementById('rectangleCount');
 
 let isDrawing = false;
 let startX, startY;
 let currentShape;
-let circleCount = 0;
-let rectangleCount = 0;
 
 let shapes = [];
 
@@ -83,8 +79,7 @@ canvas.addEventListener('mouseup', event => {
 			startY: startY,
 			radius: radius,
 		});
-		circleCount++;
-		circleCountElem.textContent = circleCount;
+	
 	} else if (currentShape === 'rectangle') {
 		const width = currentX - startX;
 		const height = currentY - startY;
@@ -95,8 +90,7 @@ canvas.addEventListener('mouseup', event => {
 			width: width,
 			height: height,
 		});
-		rectangleCount++;
-		rectangleCountElem.textContent = rectangleCount;
+		
 	}
 
 	currentShape = null;
